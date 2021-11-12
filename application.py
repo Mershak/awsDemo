@@ -39,7 +39,7 @@ def weather():
 
 
 def getMonthlyWeather():
-    page = request.get(weather)
+    page = requests.get(weather)
 
     parsedPage = BeautifulSoup(page.content, "html.parser")
 
