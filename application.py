@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from flask import Flask, request,jsonify
-
+import requests
 weather = "https://weather.com/weather/monthly/l/60eb7796d033a593c3294ffa7d76578ee16343ee1b14bbab570b30eee2a0fb0e"
 # print a nice greeting.
 def say_hello(username = "World"):
