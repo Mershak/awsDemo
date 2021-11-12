@@ -1,14 +1,7 @@
-# from flask import Flask
-# application = Flask(__name__)
-#
-# @application.route('/')
-# def home():
-#     return "Tits"
-#
-# application.run()
+from bs4 import BeautifulSoup
+from flask import Flask, request,jsonify
 
-from flask import Flask
-
+weather = "https://weather.com/weather/monthly/l/60eb7796d033a593c3294ffa7d76578ee16343ee1b14bbab570b30eee2a0fb0e"
 # print a nice greeting.
 def say_hello(username = "World"):
     return '<p>Hello %s!</p>\n' % username
@@ -38,6 +31,31 @@ application.add_url_rule('/<username>', 'hello', (lambda username:
 @application.route("/david")
 def david():
     return "415 Sucks"
+
+
+@application.route("/weather")
+def weather():
+    return jsonify(getMonthlyWeather())
+
+
+def getMonthlyWeather():
+    page = request.get(weather)
+
+    parsedPage = BeautifulSoup(page.content, "html.parser")
+
+    grid = parsedPage.find("div", class_= "Calendar--gridWrapper--1oa1f")
+    temps = grid.find_all("div", class_= "CalendarDateCell--tempHigh--2VBba")
+    days = grid.find_all("span", class_= "CalendarDateCell--date--3Fw3h")
+    tempDic = []
+    dayList = range(35)
+
+    for i in (range(len(days))):
+        tempDic.append({
+            "day" : days[i].text,
+            "temp" : temps[i].text
+        })
+
+    return tempDic
 
 # run the app.
 if __name__ == "__main__":
