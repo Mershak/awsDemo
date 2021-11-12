@@ -35,6 +35,10 @@ application.add_url_rule('/', 'index', (lambda: header_text +
 application.add_url_rule('/<username>', 'hello', (lambda username:
     header_text + say_hello(username) + home_link + footer_text))
 
+@application.route("/david")
+def david():
+    return "415 Sucks"
+
 # run the app.
 if __name__ == "__main__":
     # Setting debug to True enables debug output. This line should be
